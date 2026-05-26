@@ -1,0 +1,8 @@
+rtspTransports: [tcp]
+
+readTimeout: 60s
+writeTimeout: 60s
+
+paths:
+  rajodi:
+    source: publisher

@@ -32,7 +32,7 @@ export default function ImmersiveNode({
 }: Props) {
 
   return (
-    <section className="relative h-screen overflow-hidden bg-black">
+    <section className="relative min-h-screen overflow-hidden bg-black">
 
       {/* Background Video */}
       <video
@@ -60,7 +60,7 @@ export default function ImmersiveNode({
       />
 
       {/* Main Layout */}
-      <div className="relative z-20 flex h-full flex-col justify-between p-6 md:p-10">
+      <div className="relative z-20 flex min-h-screen flex-col justify-between gap-8 p-6 md:p-10">
 
         {/* TOP SECTION */}
         <div>
@@ -87,7 +87,7 @@ export default function ImmersiveNode({
         </div>
 
         {/* DESKTOP LIVE PULSE */}
-        <div className="hidden md:flex justify-end">
+        <div className="hidden md:flex justify-end pb-4">
 
           <div
             className={`w-[360px] rounded-[2rem] border border-white/10 bg-black/40 p-5 backdrop-blur-2xl ${theme.glow}`}
@@ -116,7 +116,7 @@ export default function ImmersiveNode({
 
         {/* BOTTOM HUD */}
         <div
-          className={`mt-4 flex items-center justify-between gap-4 rounded-[2rem] border border-white/10 bg-black/30 p-4 backdrop-blur-2xl ${theme.glow}`}
+          className={`mt-2 flex items-center justify-between gap-4 rounded-[2rem] border border-white/10 bg-black/30 p-4 backdrop-blur-2xl ${theme.glow}`}
         >
 
           {/* Presence */}

@@ -60,7 +60,7 @@ export default function ImmersiveNode({
       />
 
       {/* Main Layout */}
-      <div className="relative z-20 flex min-h-screen flex-col justify-between gap-8 p-6 md:p-10">
+      <div className="relative z-20 mx-auto flex min-h-screen w-full max-w-[1600px] flex-col justify-between gap-6 p-5 md:p-8">
 
         {/* TOP SECTION */}
         <div>
@@ -69,7 +69,7 @@ export default function ImmersiveNode({
             LIVE COASTLINE
           </p>
 
-          <h1 className="display-font mt-4 max-w-[90%] text-4xl leading-none text-white md:max-w-[700px] md:text-7xl">
+          <h1 className="display-font mt-4 max-w-[90%] text-4xl leading-none text-white md:max-w-[620px] md:text-6xl">
             {name}
           </h1>
 

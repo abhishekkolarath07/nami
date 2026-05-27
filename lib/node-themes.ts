@@ -2,7 +2,7 @@ export const nodeThemes = {
 
     rajodi: {
   
-      video: "/videos/rajodi.mp4",
+      video: "https://dqvbaxehcbbddghuakms.supabase.co/storage/v1/object/public/videos/rajodi.mp4",
   
       // Brighter atmospheric overlay
       overlay:
@@ -25,7 +25,7 @@ export const nodeThemes = {
   
     "wavedutts-sandbar": {
   
-      video: "/videos/wavedutt.mp4",
+      video: "https://dqvbaxehcbbddghuakms.supabase.co/storage/v1/object/public/videos/wavedutt.mp4",
   
       // Cleaner brighter atmosphere
       overlay:

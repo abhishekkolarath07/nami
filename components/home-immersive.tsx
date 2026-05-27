@@ -44,7 +44,7 @@ export default async function HomeImmersive() {
         className="absolute inset-0 h-full w-full object-cover"
       >
         <source
-          src="/videos/home.mp4"
+          src="https://dqvbaxehcbbddghuakms.supabase.co/storage/v1/object/public/videos/home.mp4"
           type="video/mp4"
         />
       </video>

@@ -3,59 +3,56 @@
 import { useState } from "react"
 import { supabase } from "@/lib/supabase"
 
+interface Props {
+  beachId: string
+}
+
 export default function PulseForm({
   beachId,
-}: {
-  beachId: string
-}) {
-  const [content, setContent] = useState("")
-  const [loading, setLoading] = useState(false)
+}: Props) {
 
-  async function handleSubmit() {
-    if (!content.trim()) return
+  const [message, setMessage] =
+    useState("")
+
+  const [loading, setLoading] =
+    useState(false)
+
+  async function submitPulse() {
+
+    if (!message.trim()) return
 
     setLoading(true)
 
-    const { error } = await supabase
-      .from("pulse_posts")
+    await supabase
+      .from("pulses")
       .insert({
         beach_id: beachId,
-        content,
+        message,
       })
 
-    if (!error) {
-      setContent("")
-    }
-
+    setMessage("")
     setLoading(false)
   }
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-2xl">
+    <div className="flex gap-2">
 
-      <h2 className="mb-6 text-xl font-semibold">
-        Share an Update
-      </h2>
+      <input
+        value={message}
+        onChange={(e) =>
+          setMessage(e.target.value)
+        }
+        placeholder="Share coastline pulse..."
+        className="w-full rounded-full border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-zinc-500 outline-none backdrop-blur-xl"
+      />
 
-      <div className="space-y-4">
-
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="What's happening at Rajodi?"
-          rows={5}
-          className="w-full resize-none rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white outline-none placeholder:text-zinc-500"
-        />
-
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          className="rounded-full bg-white px-5 py-2 text-sm text-black transition hover:opacity-80 disabled:opacity-50"
-        >
-          {loading ? "Posting..." : "Post Update"}
-        </button>
-
-      </div>
+      <button
+        onClick={submitPulse}
+        disabled={loading}
+        className="rounded-full border border-white/10 bg-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/20"
+      >
+        Send
+      </button>
 
     </div>
   )

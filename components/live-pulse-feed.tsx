@@ -31,16 +31,14 @@ export default function LivePulseFeed({
       .order("created_at", {
         ascending: false,
       })
-      .limit(20)
+      .limit(12)
 
     if (data) {
       setPulses(data)
     }
   }
 
-  function formatTime(
-    timestamp: string
-  ) {
+  function formatTime(timestamp: string) {
 
     const seconds =
       Math.floor(
@@ -56,13 +54,24 @@ export default function LivePulseFeed({
       Math.floor(seconds / 60)
 
     if (minutes < 60) {
-      return `${minutes} min ago`
+      return `${minutes}m ago`
     }
 
     const hours =
       Math.floor(minutes / 60)
 
-    return `${hours} hr ago`
+    if (hours < 24) {
+      return `${hours}h ago`
+    }
+
+    const days =
+      Math.floor(hours / 24)
+
+    if (days === 1) {
+      return "yesterday"
+    }
+
+    return `${days}d ago`
   }
 
   useEffect(() => {
@@ -70,7 +79,7 @@ export default function LivePulseFeed({
     fetchPulses()
 
     const channel = supabase.channel(
-      `pulse-${beachId}-${Math.random()}`
+      `pulse-${beachId}`
     )
 
     channel.on(
@@ -96,48 +105,60 @@ export default function LivePulseFeed({
   return (
     <div className="space-y-4">
 
-      {pulses.map((pulse) => (
+      {pulses.map((pulse, index) => {
 
-        <div
-          key={pulse.id}
-          className="rounded-[1.5rem] border border-white/5 bg-white/5 p-4 backdrop-blur-xl"
-        >
+        const opacity =
+          Math.max(
+            1 - index * 0.12,
+            0.25
+          )
 
-          {/* Handle */}
-          <div className="flex items-center gap-2">
+        return (
 
-            <div className="h-2 w-2 rounded-full bg-emerald-400" />
+          <div
+            key={pulse.id}
+            style={{
+              opacity,
+            }}
+            className="rounded-[1.5rem] border border-white/5 bg-white/5 p-4 backdrop-blur-xl transition-all duration-700"
+          >
 
-            <p className="text-[11px] uppercase tracking-[0.22em] text-zinc-400">
-              {pulse.handle || "Coastline Presence"}
+            {/* Handle */}
+            <div className="flex items-center gap-2">
+
+              <div className="h-2 w-2 rounded-full bg-emerald-400" />
+
+              <p className="text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+                {pulse.handle || "Coastline Presence"}
+              </p>
+
+            </div>
+
+            {/* Message */}
+            <p className="mt-3 text-sm leading-relaxed text-zinc-200">
+              {pulse.message}
+            </p>
+
+            {/* Image */}
+            {pulse.image_url && (
+
+              <img
+                src={pulse.image_url}
+                alt="Pulse"
+                className="mt-4 rounded-2xl border border-white/10 object-cover"
+              />
+
+            )}
+
+            {/* Time */}
+            <p className="mt-4 text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+              {formatTime(pulse.created_at)}
             </p>
 
           </div>
 
-          {/* Message */}
-          <p className="mt-3 text-sm leading-relaxed text-zinc-200">
-            {pulse.message}
-          </p>
-
-          {/* Image */}
-          {pulse.image_url && (
-
-            <img
-              src={pulse.image_url}
-              alt="Pulse"
-              className="mt-4 rounded-2xl border border-white/10 object-cover"
-            />
-
-          )}
-
-          {/* Time */}
-          <p className="mt-4 text-[10px] uppercase tracking-[0.2em] text-zinc-500">
-            {formatTime(pulse.created_at)}
-          </p>
-
-        </div>
-
-      ))}
+        )
+      })}
 
     </div>
   )

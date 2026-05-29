@@ -7,6 +7,7 @@ interface Pulse {
   id: string
   message: string
   created_at: string
+  expires_at: string
   image_url?: string
   handle?: string
 }
@@ -28,6 +29,10 @@ export default function LivePulseFeed({
       .from("pulses")
       .select("*")
       .eq("beach_id", beachId)
+      .gt(
+        "expires_at",
+        new Date().toISOString()
+      )
       .order("created_at", {
         ascending: false,
       })
@@ -38,7 +43,9 @@ export default function LivePulseFeed({
     }
   }
 
-  function formatTime(timestamp: string) {
+  function formatTime(
+    timestamp: string
+  ) {
 
     const seconds =
       Math.floor(
@@ -158,6 +165,7 @@ export default function LivePulseFeed({
           </div>
 
         )
+
       })}
 
     </div>

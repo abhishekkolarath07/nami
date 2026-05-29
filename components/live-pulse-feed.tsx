@@ -85,21 +85,21 @@ export default function LivePulseFeed({
 
     fetchPulses()
 
-    const channel = supabase.channel(
-      `pulse-${beachId}`
-    )
-
-    channel.on(
-      "postgres_changes",
-      {
-        event: "INSERT",
-        schema: "public",
-        table: "pulses",
-      },
-      () => {
-        fetchPulses()
-      }
-    )
+    const channel = supabase
+      .channel(
+        `pulse-${beachId}-${crypto.randomUUID()}`
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "pulses",
+        },
+        () => {
+          fetchPulses()
+        }
+      )
 
     channel.subscribe()
 

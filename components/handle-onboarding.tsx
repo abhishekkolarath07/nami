@@ -27,7 +27,7 @@ export default function HandleOnboarding({
 
     const { error } = await supabase
       .from("profiles")
-      .insert({
+      .upsert({
         id: userId,
         handle,
       })

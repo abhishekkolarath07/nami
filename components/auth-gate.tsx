@@ -31,12 +31,18 @@ export default function AuthGate({
 
     try {
 
+      console.log("LOAD USER STARTED")
+
       const {
         data: { session },
       } = await supabase.auth.getSession()
 
+      console.log("SESSION:", session)
+
       // NO SESSION
       if (!session) {
+
+        console.log("NO SESSION FOUND")
 
         setAuthenticated(false)
         setLoading(false)
@@ -45,6 +51,8 @@ export default function AuthGate({
       }
 
       const user = session.user
+
+      console.log("USER ID:", user.id)
 
       setAuthenticated(true)
       setUserId(user.id)
@@ -56,24 +64,35 @@ export default function AuthGate({
         .eq("id", user.id)
         .maybeSingle()
 
+      console.log("PROFILE DATA:", data)
+      console.log("PROFILE ERROR:", error)
+
       // PROFILE EXISTS
       if (data?.handle) {
+
+        console.log("HANDLE FOUND:", data.handle)
+
         setHasHandle(true)
+
       } else {
+
+        console.log("NO HANDLE FOUND")
+
         setHasHandle(false)
+
       }
 
-      // EVEN IF PROFILE FAILS
-      // NEVER BLOCK APP
       if (error) {
-        console.log(error)
+        console.log("PROFILE QUERY ERROR:", error)
       }
+
+      console.log("LOAD USER COMPLETE")
 
       setLoading(false)
 
     } catch (err) {
 
-      console.log(err)
+      console.log("LOAD USER CRASHED:", err)
 
       setLoading(false)
     }
@@ -88,10 +107,15 @@ export default function AuthGate({
     } = supabase.auth.onAuthStateChange(
       async (event) => {
 
-        // IGNORE TOKEN REFRESH
+        console.log("AUTH EVENT:", event)
+
+        // Ignore startup auth events
         if (
+          event === "SIGNED_IN" ||
           event === "TOKEN_REFRESHED"
-        ) return
+        ) {
+          return
+        }
 
         await loadUser()
       }

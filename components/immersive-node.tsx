@@ -98,7 +98,10 @@ export default function ImmersiveNode({
         </div>
 
         {/* MOBILE COMMUNITY DRAWER */}
-        <MobilePulseDrawer beachId={beachId} />
+        <MobilePulseDrawer 
+          beachId={beachId} 
+          slug={slug}
+        />
 
         {/* BOTTOM HUD */}
         <div

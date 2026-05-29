@@ -50,7 +50,7 @@ export const surfNodes = {
   
       // Identity
       name:
-        "Wavedutt’s Sandbar",
+        "navapur Sandbar",
   
       tagline:
         "Cleaner offshore calm drifting softly across the shoreline.",

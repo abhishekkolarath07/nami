@@ -1,12 +1,12 @@
 import JoinSession from "./join-session"
 import LivePresence from "./live-presence"
 import EnvironmentalState from "./environmental-state"
-import LivePulseFeed from "./live-pulse-feed"
-import PulseForm from "./pulse-form"
 import MobilePulseDrawer from "./mobile-pulse-drawer"
+import CoastlinePanel from "./coastline-panel"
 
 interface Props {
   beachId: string
+  slug: string
   name: string
   tagline: string
   energy: string
@@ -24,6 +24,7 @@ interface Props {
 
 export default function ImmersiveNode({
   beachId,
+  slug,
   name,
   tagline,
   energy,
@@ -86,28 +87,13 @@ export default function ImmersiveNode({
 
         </div>
 
-        {/* DESKTOP LIVE PULSE */}
-        <div className="hidden md:flex justify-end pb-4">
+        {/* DESKTOP COASTLINE PANEL */}
+        <div className="hidden justify-end pb-4 md:flex">
 
-          <div
-            className={`w-[360px] rounded-[2rem] border border-white/10 bg-black/40 p-5 backdrop-blur-2xl ${theme.glow}`}
-          >
-
-            <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
-              LIVE PULSE
-            </p>
-
-            <div className="mt-5">
-
-              <LivePulseFeed beachId={beachId} />
-
-              <div className="mt-4">
-                <PulseForm beachId={beachId} />
-              </div>
-
-            </div>
-
-          </div>
+          <CoastlinePanel
+            beachId={beachId}
+            slug={slug}
+          />
 
         </div>
 

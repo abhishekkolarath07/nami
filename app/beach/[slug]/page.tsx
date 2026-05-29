@@ -82,6 +82,7 @@ export default async function BeachPage({
 
       <ImmersiveNode
         beachId={beach.id}
+        slug={slug}
         name={node.name}
         tagline={node.tagline}
         energy={nodePresence?.energy ?? ""}
